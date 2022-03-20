@@ -1,5 +1,5 @@
 #!/bin/bash
-# Afaneh menu V2.0
+# thefiredragon menu V2.0
 
 # Variables
 DIR=`readlink -f .`
@@ -14,7 +14,7 @@ export LINUX_GCC_CROSS_COMPILE_PREBUILTS_BIN=$PARENT_DIR/aarch64-linux-android-4
 export CLANG_PREBUILT_BIN=$PARENT_DIR/clang-r383902/bin
 export PATH=$PATH:$LINUX_GCC_CROSS_COMPILE_PREBUILTS_BIN:$CLANG_PREBUILT_BIN
 export LLVM=1
-KERNEL_MAKE_ENV="LOCALVERSION=-afaneh92"
+KERNEL_MAKE_ENV="LOCALVERSION=-thefiredragon"
 
 # Color
 ON_BLUE=`echo -e "\033[44m"`	# On Blue
@@ -23,7 +23,7 @@ BLUE=`echo -e "\033[1;34m"`	# Blue
 GREEN=`echo -e "\033[1;32m"`	# Green
 Under_Line=`echo -e "\e[4m"`	# Text Under Line
 STD=`echo -e "\033[0m"`		# Text Clear
- 
+
 # Functions
 pause(){
   read -p "${RED}$2${STD}Press ${BLUE}[Enter]${STD} key to $1..." fackEnterKey
@@ -31,7 +31,7 @@ pause(){
 
 variant(){
   findconfig=""
-  findconfig=($(ls arch/arm64/configs/afaneh_* 2>/dev/null))
+  findconfig=($(ls arch/arm64/configs/thefiredragon_* 2>/dev/null))
   declare -i i=1
   shift 2
   for e in "${findconfig[@]}"; do
@@ -81,7 +81,7 @@ build_kernel(){
   variant
   echo "${GREEN}***** Compiling kernel *****${STD}"
   [ ! -d "out" ] && mkdir out
-  make -j$(nproc) -C $(pwd) $KERNEL_MAKE_ENV afaneh_${VARIANT}_defconfig
+  make -j$(nproc) -C $(pwd) $KERNEL_MAKE_ENV thefiredragon_${VARIANT}_defconfig
   make -j$(nproc) -C $(pwd) $KERNEL_MAKE_ENV
 
   [ -e arch/arm64/boot/Image.gz ] && cp arch/arm64/boot/Image.gz $(pwd)/out/Image.gz
@@ -146,7 +146,7 @@ anykernel3(){
     cd $PARENT_DIR/AnyKernel3
     git reset --hard
     cp $DIR/arch/arm64/boot/Image zImage
-    sed -i "s/ExampleKernel by osm0sis/${VARIANT} kernel by afaneh92/g" anykernel.sh
+    sed -i "s/ExampleKernel by osm0sis/${VARIANT} kernel by thefiredragon/g" anykernel.sh
     sed -i "s/=maguro/=${VARIANT}/g" anykernel.sh
     sed -i "s/=toroplus/=/g" anykernel.sh
     sed -i "s/=toro/=/g" anykernel.sh
@@ -196,7 +196,7 @@ read_options(){
 
 # Trap CTRL+C, CTRL+Z and quit singles
 trap '' SIGINT SIGQUIT SIGTSTP
- 
+
 # Step # Main logic - infinite loop
 while true
 do
